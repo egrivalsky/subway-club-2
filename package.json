@@ -1,7 +1,7 @@
 {
-  "name": "express-authentication",
+  "name": "subway-club",
   "version": "1.0.0",
-  "description": "This is express authentication",
+  "description": "Social media for mass transit",
   "main": "server.js",
   "directories": {
     "test": "test"
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/romebell/express-authentication.git"
+    "url": "git+https://github.com/egrivalsky/subway-club-2.git"
   },
-  "author": "Rome Bell",
+  "author": "Erik G",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/romebell/express-authentication/issues"
+    "url": "https://github.com/egrivalsky/subway-club-2/issues"
   },
-  "homepage": "https://github.com/romebell/express-authentication#readme",
+  "homepage": "https://github.com/egrivalsky/subway-club-2#readme",
   "dependencies": {
     "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
