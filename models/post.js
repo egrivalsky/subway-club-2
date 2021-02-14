@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   post.init({
-    id: DataTypes.INTEGER,
     title: DataTypes.STRING,
     rating: DataTypes.INTEGER,
     comment: DataTypes.STRING,

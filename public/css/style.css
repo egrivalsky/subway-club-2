@@ -1,9 +1,26 @@
+* {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
+  width: 50%;
+  margin: 0 auto;
+  box-shadow: 8px;
+  background-color: #C0C0C0;
+}
+
+header {
+  height: 40px;
+  background-color: #0C4D86;
+}
+
+footer {
+  height: 40px;
+}
+
+
 nav ul li {
   text-decoration: none;
   display: inline-block;
   margin-right: .3em;
-}
-
-h1 {
-  color: chartreuse;
 }

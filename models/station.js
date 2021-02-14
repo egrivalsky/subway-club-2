@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   station.init({
-    id: DataTypes.INTEGER,
     complex_id: DataTypes.INTEGER,
     gtfs_stop_id: DataTypes.STRING,
     division: DataTypes.STRING,
