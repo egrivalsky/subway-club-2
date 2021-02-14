@@ -10,6 +10,7 @@ const app = express();
 
 // isLoggedIn middleware
 const isLoggedIn = require('./middleware/isLoggedIn');
+const db = require('./models');
 
 app.set('view engine', 'ejs');
 
@@ -46,21 +47,28 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
+app.get('/', async(req, res) => {
   console.log(res.locals.alerts);
   res.render('index', { alerts: res.locals.alerts });
+    
 });
 
 app.get('/profile', isLoggedIn, (req, res) => {
   res.render('profile');
 });
-
+ app.get('/test', async(req, res) => {
+  const testData = await db.test.findAll();
+  res.send(testData);
+  console.log('test successful');
+ })
 
 app.use('/auth', require('./routes/auth'));
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);
+  
+  
 });
 
 module.exports = server;
