@@ -54,6 +54,7 @@ app.get('/', async(req, res) => {
 });
 
 app.get('/profile', isLoggedIn, (req, res) => {
+  console.log(isLoggedIn);
   res.render('profile');
 });
  app.get('/test', async(req, res) => {
@@ -61,6 +62,28 @@ app.get('/profile', isLoggedIn, (req, res) => {
   res.send(testData);
   console.log('test successful');
  })
+
+ app.get('/all-stations', (req, res) => {
+    console.log("at router get all-stations");
+      res.render('all-stations');
+  // try {
+  //   const allStations = await db.station.findAll();
+  //   console.log('allStations');
+  //   res.render('all-stations', { allStations });
+  // } catch(e) {
+  //   console.log('* * * * * get all-stations * * * * * ');
+  //   console.log(e);
+  //   console.log(e.message);
+   });
+
+   app.get('/all-comments', (req, res) => {
+     res.render('all-comments');
+   })
+
+   app.get('/add-comment', (req, res) => {
+     res.render('add-comment');
+      //res.send("This is where you add comments")
+   });
 
 app.use('/auth', require('./routes/auth'));
 
@@ -72,3 +95,10 @@ const server = app.listen(PORT, () => {
 });
 
 module.exports = server;
+
+// router.get('/profile', (req, res) => {
+//   res.send("This is your user profile")
+// })
+
+
+// });
