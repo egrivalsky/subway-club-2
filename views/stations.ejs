@@ -1,0 +1,15 @@
+<h1>All Stations</h1>
+
+<p><a href="/">Back home.</a></p>
+
+<h3>Pick your station:</h3>
+ <% for ( let i = 0; i < allStations.length; i++ ) { %>
+   <% thisStation = allStations[i] %>
+
+<p><a href="/show/<%= thisStation.id %>"><%= thisStation.name %></a></p>
+
+ <%}%>
+
+
+
+

@@ -62,19 +62,38 @@ app.get('/profile', isLoggedIn, (req, res) => {
   res.send(testData);
   console.log('test successful');
  })
+//STATIONS
 
- app.get('/all-stations', (req, res) => {
-    console.log("at router get all-stations");
-      res.render('all-stations');
-  // try {
-  //   const allStations = await db.station.findAll();
-  //   console.log('allStations');
-  //   res.render('all-stations', { allStations });
-  // } catch(e) {
-  //   console.log('* * * * * get all-stations * * * * * ');
-  //   console.log(e);
-  //   console.log(e.message);
-   });
+app.get('/show/:id', async(req, res) => {
+  try {
+    const myStation = await db.station.findOne({
+      where: { id: req.params.id }
+    });
+    
+    console.log('********station found ' + myStation.name + ' *********');
+    //res.send("this is the station's page and it's name is " + myStation.name);
+    res.render('show', { myStation });
+  } catch(e) {
+    console.log('* * * * * get stations * * * * * ');
+    console.log(e);
+    console.log(e.message);
+  }
+});
+
+ app.get('/stations', async(req, res) => {
+    console.log("at router get stations");
+      try {
+        const allStations = await db.station.findAll();
+        console.log('all stations found');
+        res.render('stations', { allStations });
+      } catch(e) {
+        console.log('* * * * * get stations * * * * * ');
+        console.log(e);
+        console.log(e.message);
+      }
+  });
+
+
 
    app.get('/all-comments', (req, res) => {
      res.render('all-comments');
