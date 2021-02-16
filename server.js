@@ -63,22 +63,28 @@ app.get('/profile', isLoggedIn, (req, res) => {
   console.log('test successful');
  })
 //STATIONS
-
 app.get('/show/:id', async(req, res) => {
   try {
-    const myStation = await db.station.findOne({
-      where: { id: req.params.id }
-    });
-    
-    console.log('********station found ' + myStation.name + ' *********');
-    //res.send("this is the station's page and it's name is " + myStation.name);
-    res.render('show', { myStation });
+  const thisStation = await db.station.findByPk(req.params.id)
+    res.render('show.ejs', { thisStation });
   } catch(e) {
-    console.log('* * * * * get stations * * * * * ');
-    console.log(e);
-    console.log(e.message);
+    console.log(e)
   }
-});
+  });
+
+app.get('/stations/:id', (req, res) => {
+      const thisStation = req.params.id;
+      res.redirect(`/show/${thisStation}`);
+      console.log(`redirecting to show/${thisStation}`)
+    });
+    //const myStation = await db.station.findOne({
+    //   where: { id: req.params.id }
+    // })
+    // console.log(myStation.id)
+    // res.redirect(`/show/${myStation.id}`);
+    // console.log('********station found ' + myStation.name + ' *********');
+    // //res.send("this is the station's page and it's name is " + myStation.name);
+    // res.render('show', { myStation });
 
  app.get('/stations', async(req, res) => {
     console.log("at router get stations");
@@ -92,8 +98,6 @@ app.get('/show/:id', async(req, res) => {
         console.log(e.message);
       }
   });
-
-
 
    app.get('/all-comments', (req, res) => {
      res.render('all-comments');

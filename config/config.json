@@ -1,15 +1,18 @@
 {
   "development": {
+
     "database": "subway_club_dev",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
+
     "database": "subway_club_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
+
     "database": "subway_club_production",
     "host": "127.0.0.1",
     "dialect": "postgres"

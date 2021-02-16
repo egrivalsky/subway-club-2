@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.station.belongsToMany(models.line, {
+        through: "stationsLines"
+      });
+      models.station.hasMany(models.post);
+      models.station.hasMany(models.user);
     }
   };
   station.init({
