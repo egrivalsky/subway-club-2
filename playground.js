@@ -12,18 +12,18 @@ const isLoggedIn = require('./middleware/isLoggedIn');
 const db = require('./models');
 
 // First, get a reference to a pet.
-db.station.findOrCreate({
+db.user.findOrCreate({
     where: {
-      id: 10
+      id: 1
     }
-  }).then(function([station, created]) {
+  }).then(function([user, created]) {
     // Second, get a reference to a toy.
-    db.line.findOrCreate({
-      where: {name: "Q"}
-    }).then(function([line, created]) {
+    db.post.findOrCreate({
+      where: {id: 2}
+    }).then(function([post, created]) {
       // Finally, use the "addModel" method to attach one model to another model.
-      station.addLine(line).then(function(relationInfo) {
-        console.log(line.name, "added to", station.id);
+      user.addLine(post).then(function(relationInfo) {
+        console.log(post.name, "added to", user.id);
       });
     });
   });

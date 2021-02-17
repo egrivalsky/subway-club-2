@@ -56,10 +56,11 @@ app.get('/', async(req, res) => {
     
 });
 
-app.get('/profile', isLoggedIn, (req, res) => {
-  console.log(isLoggedIn);
-  res.render('profile');
+app.get('/profile', isLoggedIn, async(req, res) => {
+const { id, name, email } = req.user.get();
+  res.render('profile', { id, name, email });
 });
+
  app.get('/test', async(req, res) => {
   const testData = await db.test.findAll();
   res.send(testData);
