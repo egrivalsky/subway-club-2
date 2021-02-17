@@ -3,3 +3,14 @@
 <p><a href="/">Back home.</a></p>
 
 <h2>Welcome, <%= name %></h2>
+
+<p>Most recent posts: </p>
+<% for (let i = 0; i < userPosts.length; i++) { %>
+   <% thisPost = userPosts[i]; %>
+<div class="profile-post">
+    <h3><%= thisPost.title %> %></h3>
+    <h5><%= thisPost.createdAt %></h5>
+<p><%= thisPost.comment %></p>
+</div>
+
+<% } %>

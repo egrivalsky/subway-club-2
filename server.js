@@ -58,7 +58,24 @@ app.get('/', async(req, res) => {
 
 app.get('/profile', isLoggedIn, async(req, res) => {
 const { id, name, email } = req.user.get();
-  res.render('profile', { id, name, email });
+try {
+  const userPosts = await db.post.findAll({
+  where: {
+    userId: id
+  }
+}, console.log("HERE IS  USERPOSTS: "))
+console.log(userPosts)
+  res.render('profile', { id, name, email, userPosts });
+  console.log("here is our id, name, email, and userPosts")
+  console.log(id);
+  console.log(name);
+  console.log(email);
+  console.log(userPosts)
+  console.log("WE ARE LOOKING AT THIS")
+} catch(e) {
+  console.log("we are hitting the catch. Here is our error: >>>>>>>>>>>")
+  console.log(e.message)
+}
 });
 
  app.get('/test', async(req, res) => {
