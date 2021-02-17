@@ -19,11 +19,11 @@ db.user.findOrCreate({
   }).then(function([user, created]) {
     // Second, get a reference to a toy.
     db.post.findOrCreate({
-      where: {id: 2}
+      where: {id: 10}
     }).then(function([post, created]) {
       // Finally, use the "addModel" method to attach one model to another model.
-      user.addLine(post).then(function(relationInfo) {
-        console.log(post.name, "added to", user.id);
+      user.addPost(post).then(function(relationInfo) {
+        console.log(post.title, "added to", user.id);
       });
     });
   });
