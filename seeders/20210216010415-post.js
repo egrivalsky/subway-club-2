@@ -12,6 +12,7 @@ module.exports = {
      * }], {});
     */
    return queryInterface.bulkInsert('posts', [{
+    userId: 1, 
     title: "Profit-focused",
     rating: 1,
     comment: "Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.",
@@ -20,6 +21,7 @@ module.exports = {
     updatedAt: new Date()
   }, 
   {
+    userId: 1,
     title: "emulation",
     rating: 1,
     comment: "Duis bibendum, felis sed interdum venenatis.",
@@ -28,6 +30,7 @@ module.exports = {
     updatedAt: new Date()
   }, 
   {
+    userId: 1,
     title: "Graphical User Interface",
     rating: 2,
     comment: "Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.\n\nCras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.",
@@ -36,6 +39,7 @@ module.exports = {
     updatedAt: new Date()
   }, 
   {
+    userId: 1,
     title: "model",
     rating: 3,
     comment: "Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.",
@@ -44,6 +48,7 @@ module.exports = {
     updatedAt: new Date()
   }, 
   {
+    userId: 1,
     title: "foreground",
     rating: 4,
     comment: "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.",
@@ -52,6 +57,7 @@ module.exports = {
     updatedAt: new Date()
   }, 
   {
+    userId: 1,
     title: "zero tolerance",
     rating: 5,
     comment: "Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",

@@ -6,6 +6,9 @@ const session = require('express-session');
 const passport = require('./config/ppConfig');
 const flash = require('connect-flash');
 const SECRET_SESSION = process.env.SECRET_SESSION;
+const multer = require('multer');
+const cloudinary = require('cloudinary');
+const uploads = multer({ dest: './uploads'});
 const app = express();
 
 // isLoggedIn middleware
@@ -62,6 +65,7 @@ app.get('/profile', isLoggedIn, (req, res) => {
   res.send(testData);
   console.log('test successful');
  })
+
 //STATIONS
 app.get('/show/:id', async(req, res) => {
   try {
@@ -75,22 +79,17 @@ app.get('/show/:id', async(req, res) => {
 app.get('/stations/:id', (req, res) => {
       const thisStation = req.params.id;
       res.redirect(`/show/${thisStation}`);
-      console.log(`redirecting to show/${thisStation}`)
     });
-    //const myStation = await db.station.findOne({
-    //   where: { id: req.params.id }
-    // })
-    // console.log(myStation.id)
-    // res.redirect(`/show/${myStation.id}`);
-    // console.log('********station found ' + myStation.name + ' *********');
-    // //res.send("this is the station's page and it's name is " + myStation.name);
-    // res.render('show', { myStation });
+
 
  app.get('/stations', async(req, res) => {
     console.log("at router get stations");
       try {
-        const allStations = await db.station.findAll();
-        console.log('all stations found');
+        const allStations = await db.station.findAll({
+          include: [
+              { model: db.line }
+          ]
+      });
         res.render('stations', { allStations });
       } catch(e) {
         console.log('* * * * * get stations * * * * * ');
@@ -99,15 +98,53 @@ app.get('/stations/:id', (req, res) => {
       }
   });
 
-   app.get('/all-comments', (req, res) => {
-     res.render('all-comments');
-   })
+//COMMENTS
+    //go to the comments page
+  app.get('/post/:id', async(req, res) => {
+    try {
+    const thisStation = await db.station.findByPk(req.params.id)
+      res.render('post.ejs', { thisStation });
+    } catch(e) {
+      console.log(e)
+    }
+    });
 
-   app.get('/add-comment', (req, res) => {
-     res.render('add-comment');
-      //res.send("This is where you add comments")
-   });
+//leave a comment
+app.post('/post', uploads.single('inputFile'), (req, res) => {
+  const image = req.file.path;
+  const data = req.body;
+  console.log(data);
 
+  // db.post.create({
+  //   title: data.title,
+  //   rating: data.rating,
+  //   comment: data.comment,
+  // })
+  // .then(
+  cloudinary.uploader.upload(image, (result) => {
+    console.log(result); // object
+    photo = result.url; // string
+    const newPost = db.post.create({
+        user_photo: photo,
+        title: data.title,
+        rating: data.rating,
+        comment: data.comment,
+      })
+      .then(newPost => { //this is the first time I realized I needed this on my own
+        res.redirect(`/newPost/${newPost.id}`) 
+      });
+      });
+});
+
+app.get('/newPost/:id', async(req, res) => {
+  try{
+    const newPost = await db.post.findByPk(req.params.id);
+    console.log(newPost.get())
+    res.render('newPost', {post: newPost.get() });
+  } catch(e) {
+    console.log(e.message);
+  }
+})
 app.use('/auth', require('./routes/auth'));
 
 const PORT = process.env.PORT || 3000;

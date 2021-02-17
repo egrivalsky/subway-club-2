@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       models.station.hasMany(models.post);
       models.station.hasMany(models.user);
+      
     }
   };
   station.init({

@@ -7,7 +7,23 @@ const flash = require('connect-flash');
 const SECRET_SESSION = process.env.SECRET_SESSION;
 const app = express();
 
-app.get( async() => {
-    const stations = await db.station;
-    console.log(stations);
-})
+// isLoggedIn middleware
+const isLoggedIn = require('./middleware/isLoggedIn');
+const db = require('./models');
+
+// // First, get a reference to a pet.
+// db.station.findOrCreate({
+//     where: {
+//       id: 9
+//     }
+//   }).then(function([station, created]) {
+//     // Second, get a reference to a toy.
+//     db.line.findOrCreate({
+//       where: {name: "R"}
+//     }).then(function([line, created]) {
+//       // Finally, use the "addModel" method to attach one model to another model.
+//       station.addLine(line).then(function(relationInfo) {
+//         console.log(line.name, "added to", station.id);
+//       });
+//     });
+//   });

@@ -4,10 +4,20 @@
 
 <h3>Pick your station:</h3>
  <% for ( let i = 0; i < allStations.length; i++ ) { %>
-   <% thisStation = allStations[i] %>
+   <% thisStation = allStations[i] %> 
 
-<p><a href="/stations/<%= thisStation.id %>"><%= thisStation.name %></a></p>
 
+<p><a href="/stations/<%= thisStation.id %>"><%= thisStation.name %></a><span></p>
+
+
+<p>With access to the following lines:</p>
+  
+ <span> <% for ( let i = 0; i < thisStation.lines.length; i++ ) { %>
+    <% const lineItem = thisStation.lines[i].get() %>
+    <%= lineItem.name %> 
+ </span>
+
+   <%}%>
  <%}%>
 
 

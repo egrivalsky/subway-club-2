@@ -1,0 +1,24 @@
+Edit and post comments.
+<h2><%= thisStation.name %></h2>
+<p><a href="/">Back home.</a></p>
+
+<h3>Tell us about <%= thisStation.name %></h3>
+
+<form action="/post" method="POST" enctype="multipart/form-data">
+    <div class="post-form">
+        <label for="title">Give your post a title</label>
+        <input type="text" name="title" />
+    </div>
+        <label for="inputFile">Share an image</label>
+        <input type="file" name="inputFile">
+        <button type="submit" class="btn btn-primary">Upload Image</button>
+    </div>
+    <div class="post-form">
+        <label for="comment">Tell me about it</label>
+        <input type="textarea" name="comment" />
+    </div>
+    <div>
+        <button type="submit"></button>
+    </div>
+    </form>
+</div>
