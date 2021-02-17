@@ -88,7 +88,8 @@ app.get('/stations/:id', (req, res) => {
         const allStations = await db.station.findAll({
           include: [
               { model: db.line }
-          ]
+          ],
+          order: [['name', 'asc']]
       });
         res.render('stations', { allStations });
       } catch(e) {

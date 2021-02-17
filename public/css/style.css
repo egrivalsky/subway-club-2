@@ -17,17 +17,22 @@ button {
 header {
   height: 40px;
   background-color: #0C4D86;
+  color:white;
 }
 
 footer {
   height: 40px;
 }
 
+nav a {
+  color: white;
+}
 
 nav ul li {
   text-decoration: none;
   display: inline-block;
   margin-right: .3em;
+
 }
 
 .post-form {

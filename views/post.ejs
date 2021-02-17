@@ -7,18 +7,19 @@ Edit and post comments.
 <form action="/post" method="POST" enctype="multipart/form-data">
     <div class="post-form">
         <label for="title">Give your post a title</label>
-        <input type="text" name="title" />
+        <input type="text" name="title" style="width: 200px" autofocus placeholder="Give it a catchy title" cols="40"/>
     </div>
         <label for="inputFile">Share an image</label>
         <input type="file" name="inputFile">
-        <button type="submit" class="btn btn-primary">Upload Image</button>
     </div>
     <div class="post-form">
         <label for="comment">Tell me about it</label>
-        <input type="textarea" name="comment" />
+        <textarea name="comment" placeholder="Tell the world a story about this station" rows="8" cols="100"></textarea>
     </div>
     <div>
-        <button type="submit"></button>
+        <label for="rating">Rate <%= this.station %> 1 - 10</label>
+        <input type="number" value="5" min="1" max="10" require cols="4">
     </div>
+    <button type="submit" class="btn btn-primary">Upload and share</button>
     </form>
 </div>
