@@ -40,3 +40,11 @@ nav ul li {
   flex-direction: column;
   margin: 15px 15px;
 }
+
+.profile-post {
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: -15px -10px 20px 10px rgb(137, 137, 175) inset;
+  margin: 5px;
+  max-width: 80%;
+}
