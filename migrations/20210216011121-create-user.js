@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       stationId: {
-        type: Sequelize.INTEGER //added this as a last-ditch effort
+        type: Sequelize.INTEGER 
       },
       createdAt: {
         allowNull: false,

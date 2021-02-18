@@ -132,18 +132,16 @@ app.get('/stations/:id', (req, res) => {
 app.post('/post', uploads.single('inputFile'), (req, res) => {
   const image = req.file.path;
   const data = req.body;
+  const thisUser = req.user.get();
   console.log(data);
+  console.log(thisUser);
 
-  // db.post.create({
-  //   title: data.title,
-  //   rating: data.rating,
-  //   comment: data.comment,
-  // })
-  // .then(
   cloudinary.uploader.upload(image, (result) => {
     console.log(result); // object
     photo = result.url; // string
     const newPost = db.post.create({
+        userId: thisUser.id,
+        stationId: data.station,
         user_photo: photo,
         title: data.title,
         rating: data.rating,
@@ -158,8 +156,10 @@ app.post('/post', uploads.single('inputFile'), (req, res) => {
 app.get('/newPost/:id', async(req, res) => {
   try{
     const newPost = await db.post.findByPk(req.params.id);
-    console.log(newPost.get())
-    res.render('newPost', {post: newPost.get() });
+    const thisStation = await db.station.findByPk(newPost.stationId);
+    console.log(newPost.get());
+    console.log(thisStation.name);
+    res.render('newPost', {post: newPost.get(), station: thisStation }); //***
   } catch(e) {
     console.log(e.message);
   }

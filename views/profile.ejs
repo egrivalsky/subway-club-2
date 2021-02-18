@@ -4,10 +4,14 @@
 
 <h2>Welcome, <%= name %></h2>
 
-<p>Most recent posts: </p>
+<h3>Home Station: <h4><%=  %></h4></h3>
+<h3>Member Since: <h4><%=  %></h4></h3>
+
+<h3>Most recent posts:  </h3>
 <% for (let i = 0; i < userPosts.length; i++) { %>
    <% thisPost = userPosts[i]; %>
 <div class="profile-post">
+    <h3><%= thisStation %></h3>
     <h3><%= thisPost.title %> %></h3>
     <h5><%= thisPost.createdAt %></h5>
 <p><%= thisPost.comment %></p>

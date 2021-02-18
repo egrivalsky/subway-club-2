@@ -3,8 +3,12 @@ Edit and post comments.
 <p><a href="/">Back home.</a></p>
 
 <h3>Tell us about <%= thisStation.name %></h3>
+<h3>Station ID: <%= thisStation.id %></h3>
+
 
 <form action="/post" method="POST" enctype="multipart/form-data">
+    <input type="hidden" value="<%= thisStation.id %>" name="station">
+    <input type="hidden" value="<%= thisStation.name %>" name="name">
     <div class="post-form">
         <label for="title">Give your post a title</label>
         <input type="text" name="title" style="width: 200px" autofocus placeholder="Give it a catchy title" cols="40"/>
