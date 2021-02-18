@@ -1,7 +1,7 @@
 
-<h3><%= thisStation.name %></h3>
+<h3><%= station.name %></h3>
 <P><%= post.title %></P>
 <P><%=  post.comment %></P>
 <img src="<%= post.user_photo %>" width="200px">
-<p><a href="/">Back Home</a></p> <p>Back to This Station</p>
+<p><a href="/">Back Home</a></p> <p><a href="/show/<%= station.id %>">Back to This Station</p>
 

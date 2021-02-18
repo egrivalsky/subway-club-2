@@ -11,13 +11,13 @@ const SECRET_SESSION = process.env.SECRET_SESSION;
 const isLoggedIn = require('./middleware/isLoggedIn');
 const db = require('./models');
 
-// First, get a reference to a pet.
+// ADD LINES TO STATIONS
 db.station.findOrCreate({
     where: {
       id: 8
     }
   }).then(function([station, created]) {
-    // Second, get a reference to a toy.
+    // Second, get a reference to a line.
     db.line.findOrCreate({
       where: {name: "R"}
     }).then(function([line, created]) {
@@ -27,3 +27,5 @@ db.station.findOrCreate({
       });
     });
   });
+
+  

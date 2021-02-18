@@ -57,25 +57,21 @@ app.get('/', async(req, res) => {
 });
 
 app.get('/profile', isLoggedIn, async(req, res) => {
-const { id, name, email } = req.user.get();
-try {
-  const userPosts = await db.post.findAll({
-  where: {
-    userId: id
-  }
-}, console.log("HERE IS  USERPOSTS: "))
-console.log(userPosts)
-  res.render('profile', { id, name, email, userPosts });
-  console.log("here is our id, name, email, and userPosts")
-  console.log(id);
-  console.log(name);
-  console.log(email);
-  console.log(userPosts)
-  console.log("WE ARE LOOKING AT THIS")
-} catch(e) {
-  console.log("we are hitting the catch. Here is our error: >>>>>>>>>>>")
-  console.log(e.message)
-}
+    const { id, name, email } = req.user.get();
+    try {
+      const userPosts = await db.post.findAll({
+      where: { userId: id },
+      include: [db.station],
+      order: [['createdAt', 'desc']]
+      })
+      console.log("HERE IS  USERPOSTS: ")
+      console.log(userPosts)
+      console.log("here is our id, name, email, and userPosts");
+      res.render('profile', { id, name, email, userPosts });
+    } catch(e) {
+      console.log("we are hitting the catch. Here is our error: >>>>>>>>>>>")
+      console.log(e.message)
+    }
 });
 
  app.get('/test', async(req, res) => {
@@ -87,10 +83,26 @@ console.log(userPosts)
 //STATIONS
 app.get('/show/:id', async(req, res) => {
   try {
-  const thisStation = await db.station.findByPk(req.params.id)
-    res.render('show.ejs', { thisStation });
+  const thisStation = await db.station.findByPk(req.params.id);
+  const existAlready = await db.post.count({ where: {stationId: thisStation.id} });
+  if (existAlready > 0) {
+      const thesePosts = await db.post.findAll({
+          where: { stationId: thisStation.id },
+          order: [['createdAt', 'desc']]
+          });
+
+        console.log("thesePosts[2].get() below:")  
+        console.log(thesePosts[2].get())
+
+        res.render('show', { thisStation, thesePosts });
+        console.log("thisStation.get() below: " );
+        console.log(thisStation.get())
+  } else { 
+    res.redirect('/stations'); // --??-- how do I make a flash error instead?
+    }
   } catch(e) {
-    console.log(e)
+    console.log("WE HIT THE CATCH. ERROR BELOW:")
+    console.log(message);
   }
   });
 
@@ -129,7 +141,7 @@ app.get('/stations/:id', (req, res) => {
     });
 
 //leave a comment
-app.post('/post', uploads.single('inputFile'), (req, res) => {
+app.post('/post', uploads.single('inputFile'), (req, res) => { //after posting redirect (and post?) goes to wrong station!
   const image = req.file.path;
   const data = req.body;
   const thisUser = req.user.get();
@@ -156,21 +168,23 @@ app.post('/post', uploads.single('inputFile'), (req, res) => {
 app.get('/newPost/:id', async(req, res) => {
   try{
     const newPost = await db.post.findByPk(req.params.id);
-    const thisStation = await db.station.findByPk(newPost.stationId);
-    console.log(newPost.get());
-    console.log(thisStation.name);
-    res.render('newPost', {post: newPost.get(), station: thisStation }); //***
+    const thisStation = await db.station.findByPk(newPost.stationId); // --??-- I can access newPost.station here
+    console.log("newPost StationId: " + thisStation.get().id);
+    console.log(newPost); // --??-- but I can't log the whole object here
+    console.log(thisStation.get().name);
+    res.render('newPost', {post: newPost.get(), station: thisStation.get() }); //***
   } catch(e) {
     console.log(e.message);
   }
-})
+});
+
 app.use('/auth', require('./routes/auth'));
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);
   
-  
+
 });
 
 module.exports = server;

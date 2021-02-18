@@ -1,10 +1,18 @@
 <p><a href="/">Back home.</a></p>
 
-<h1>Your Stations</h1>
+<h1> <%= thisStation.name %>  </h1>
 
-<h3>This station is <%= thisStation.name %></h3>
+<h3>Most Recent comments</h3>
 <h4><a href="/post/<%= thisStation.id %>">Rate and comment</a></h4>
 
-<p><%= thisStation.name %></p>
+<% for (let i = 0; i < thesePosts.length; i ++ ) { %> 
+  <% const post = thesePosts[i].get() %> 
 
+  <div class="profile-post">
+    <h3><%= thisStation.name %></h3>
+    <h3><%= post.title %> </h3>
+    <h5><%= post.createdAt %></h5>
+    <p><%= post.comment %></p>
 
+</div>
+<% } %> 
