@@ -6,7 +6,13 @@ body {
   width: 50%;
   margin: 0 auto;
   box-shadow: 8px;
-  background-color: #C0C0C0;
+  background-color:#C0C0C0;
+ 
+  border-radius: 25px;
+  box-shadow: 12px 12px 20px 25px #909090;
+  padding:20px;
+  margin-top: 50px;
+  opacity: 1;
 }
 
 button {
