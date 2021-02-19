@@ -57,77 +57,11 @@ app.get('/', async(req, res) => {
     
 });
 
-//PROFILE
-app.get('/profile', isLoggedIn, async(req, res) => {
-    const user = req.user.get();
-    try {
-      const userPosts = await db.post.findAll({
-      where: { userId: user.id },
-      include: [db.station],
-      order: [['createdAt', 'desc']]
-      })
-      console.log(user);
-      res.render('profile', { user, userPosts });
-    } catch(e) {
-      console.log("we are hitting the catch. Here is our error: >>>>>>>>>>>")
-      console.log(e.message)
-    }
-
-});
-
-//EDIT PROFILE
-
-app.get('/edit/:id', async(req, res) => {
-  try {
-    const thisUser = await db.user.findByPk(req.params.id);
-    const stationInfo = await db.station.findAll({
-      order: [['name', 'asc']]
-    })
-    res.render('edit', { thisUser, stationInfo });
-  } catch {
-    console.log(e.message);
-  }
-})
-
-app.put('/profile/:id', uploads.single('inputFile'), async(req, res) => {
-  console.log("req.params.id: ");
-  console.log(req.params.id);
-  const image = req.file.path;
-  const data = req.body;
-  console.log("data: ");
-  console.log(data);
-  const thisUser = req.user.get();
-  console.log("< < < < thisUser > > > > ");
-  console.log(thisUser);
-  console.log("< < < < thisUser > > > > ");
-  //uploads image and returns url
-  try {
-    await cloudinary.uploader.upload(image, (result) => {
-      console.log(result);
-      photo = result.url;
-      });
-    //updates user table, including new photo url
-    const profile = await db.user.update({
-    userName: data.userName, 
-    avi: photo, 
-    aboutMe: data.aboutMe, 
-    stationId: data.stationId
-  }, {
-    where: { id: req.params.id },
-    returning: true, //don't know what this does
-    plain: true,  //or this -- stack overflow
-  }) //shows new profile
-    res.redirect('/profile')
-  } catch(e) {
-    console.log(e.message);
-  } 
-
  app.get('/test', async(req, res) => {
   const testData = await db.test.findAll();
   res.send(testData);
   console.log('test successful');
- })
-});
+ });
 
 //STATIONS
 app.get('/show/:id', async(req, res) => {
@@ -150,78 +84,6 @@ app.get('/show/:id', async(req, res) => {
   }
   });
 
-app.get('/stations/:id', (req, res) => {
-      const thisStation = req.params.id;
-      res.redirect(`/show/${thisStation}`);
-    });
-
-
- app.get('/stations', async(req, res) => {
-    console.log("at router get stations");
-      try {
-        const allStations = await db.station.findAll({
-          include: [
-              { model: db.line }
-          ],
-          order: [['name', 'asc']]
-      });
-        res.render('stations', { allStations });
-      } catch(e) {
-        console.log('* * * * * get stations * * * * * ');
-        console.log(e);
-        console.log(e.message);
-      }
-  });
-
-//COMMENTS
-    //go to the comments page
-  app.get('/post/:id', isLoggedIn, async(req, res) => {
-    try {
-    const thisStation = await db.station.findByPk(req.params.id)
-      res.render('post.ejs', { thisStation });
-    } catch(e) {
-      console.log(e)
-    }
-    });
-//Woke up this morning 2/19 to find this next app.post route. copy/pasted it from
-//old github browser tab
- //leave a comment
-app.post('/post', uploads.single('inputFile'), (req, res) => { //after posting redirect (and post?) goes to wrong station!
-  const image = req.file.path;
-  const data = req.body;
-  const thisUser = req.user.get();
-  console.log(data);
-  console.log(thisUser);
-
-  cloudinary.uploader.upload(image, (result) => {
-    console.log(result); // object
-    photo = result.url; // string
-    const newPost = db.post.create({
-        userId: thisUser.id,
-        stationId: data.station,
-        user_photo: photo,
-        title: data.title,
-        rating: data.rating,
-        comment: data.comment,
-      })
-      .then(newPost => { //this is the first time I realized I needed this on my own
-        res.redirect(`/newPost/${newPost.id}`) 
-      });
-      });
-});
-
-app.delete('/post/:id', async(req, res) => {
-  console.log("hello");
-  try {
-    await db.post.destroy({
-      where: { id: req.params.id }
-    })
-    res.redirect('/profile')
-  } catch(e) {
-    console.log(e.message);
-  }
-});
-
 app.get('/newPost/:id', async(req, res) => {
   try{
     const newPost = await db.post.findByPk(req.params.id);
@@ -235,20 +97,25 @@ app.get('/newPost/:id', async(req, res) => {
   }
 });
 
+// app.get('/somethingbroke', (req, res) => {
+//   res.render('404');
+// })
+// .catch(e => {
+//  console.log('SNAG. Your app is broke. Fix it. :)');
+//  console.log('Error below ...v');
+//  console.log(e);
+// });
+
 app.use('/auth', require('./routes/auth'));
+app.use('/profile', require('./routes/profile'));
+app.use('/edit', require('./routes/editProfile'));
+app.use('/stations', require('./routes/stations'));
+app.use('/post', require('./routes/post'));
+
+
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
-  console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);
-  
-
-});
+console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);
 
 module.exports = server;
-
-// router.get('/profile', (req, res) => {
-//   res.send("This is your user profile")
-// })
-
-
-// });
