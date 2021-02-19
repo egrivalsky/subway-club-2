@@ -79,7 +79,7 @@ app.use('/stations', require('./routes/stations'));
 app.use('/post', require('./routes/post'));
 app.use('/show', require('./routes/show'));
 app.use('/newPost', require('./routes/newPost'));
-
+app.use('/playground', require('./routes/playground'));
 
 
 const PORT = process.env.PORT || 3000;
