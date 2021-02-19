@@ -11,6 +11,7 @@ const isLoggedIn = require('../middleware/isLoggedIn');
 const db = require('../models');
 
 router.get('/:id', async(req, res) => {
+    console.log("made it to routes/show");
     try {
     const thisStation = await db.station.findByPk(req.params.id);
     const existAlready = await db.post.count({ where: {stationId: thisStation.id} });

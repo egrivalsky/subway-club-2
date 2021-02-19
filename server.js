@@ -77,7 +77,7 @@ app.use('/profile', require('./routes/profile'));
 app.use('/edit', require('./routes/editProfile'));
 app.use('/stations', require('./routes/stations'));
 app.use('/post', require('./routes/post'));
-app.use('./show', require('./routes/show'));
+app.use('/show', require('./routes/show'));
 app.use('/newPost', require('./routes/newPost'));
 
 
