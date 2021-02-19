@@ -22,7 +22,7 @@ router.get('/:id', async(req, res) => {
           res.render('show', { thisStation, thesePosts });
   
     } else { 
-      res.redirect('/stations'); // --??-- how do I make a flash error instead?
+      res.redirect('/'); // --??-- how do I make a flash error instead?
       }
     } catch(e) {
       console.log("WE HIT THE CATCH. ERROR BELOW:")
