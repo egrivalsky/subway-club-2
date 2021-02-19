@@ -10,13 +10,14 @@ const multer = require('multer');
 const cloudinary = require('cloudinary');
 const uploads = multer({ dest: './uploads'});
 const app = express();
+const methodOverride = require('method-override');
 
 // isLoggedIn middleware
 const isLoggedIn = require('./middleware/isLoggedIn');
 const db = require('./models');
 
+app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
-
 app.use(require('morgan')('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
@@ -58,7 +59,7 @@ app.get('/', async(req, res) => {
 
 //PROFILE
 app.get('/profile', isLoggedIn, async(req, res) => {
-    const { id, name, email, username, stationId, blurb, avi } = req.user.get();
+    const { id, name, email, userName, avi, aboutMe, stationId, createdAt} = req.user.get();
     try {
       const userPosts = await db.post.findAll({
       where: { userId: id },
@@ -67,12 +68,13 @@ app.get('/profile', isLoggedIn, async(req, res) => {
       })
       console.log("HERE IS  USERPOSTS: ")
       console.log(userPosts)
-      console.log("here is our id, name, email, and userPosts");
-      res.render('profile', { id, name, email, userPosts });
+      console.log("here is our id, name, email, stationIdand userPosts");
+      res.render('profile', { createdAt, id, name, email, userPosts, userName, avi, stationId, aboutMe });
     } catch(e) {
       console.log("we are hitting the catch. Here is our error: >>>>>>>>>>>")
       console.log(e.message)
     }
+
 });
 
 //EDIT PROFILE
@@ -93,11 +95,30 @@ app.get('/edit/:id', async(req, res) => {
   }
 })
 
+app.put('/profile/:id', async(req, res) => {
+  try {
+    console.log(req.params.id);
+  const profile = await db.user.update({
+    userName: req.body.userName, 
+    avi: req.body.avi, 
+    aboutMe: req.body.aboutMe, 
+    stationId: req.body.stationId
+  }, {
+    where: { id: req.params.id },
+    returning: true,
+    plain: true,
+  }) 
+    res.redirect('/profile')
+  } catch(e) {
+    console.log(e.message);
+  } 
+
  app.get('/test', async(req, res) => {
   const testData = await db.test.findAll();
   res.send(testData);
   console.log('test successful');
  })
+});
 
 //STATIONS
 app.get('/show/:id', async(req, res) => {
@@ -159,30 +180,7 @@ app.get('/stations/:id', (req, res) => {
     }
     });
 
-//leave a comment
-app.post('/post', uploads.single('inputFile'), (req, res) => { //after posting redirect (and post?) goes to wrong station!
-  const image = req.file.path;
-  const data = req.body;
-  const thisUser = req.user.get();
-  console.log(data);
-  console.log(thisUser);
-
-  cloudinary.uploader.upload(image, (result) => {
-    console.log(result); // object
-    photo = result.url; // string
-    const newPost = db.post.create({
-        userId: thisUser.id,
-        stationId: data.station,
-        user_photo: photo,
-        title: data.title,
-        rating: data.rating,
-        comment: data.comment,
-      })
-      .then(newPost => { //this is the first time I realized I needed this on my own
-        res.redirect(`/newPost/${newPost.id}`) 
-      });
-      });
-});
+ 
 
 app.get('/newPost/:id', async(req, res) => {
   try{

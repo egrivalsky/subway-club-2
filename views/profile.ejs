@@ -5,9 +5,9 @@
 <h2>Welcome, <%= name %></h2>
 <p><a href="/edit/<%= id %>">Edit profile</a></p>
 
-<h3>Home Station: <h4><%=  %></h4></h3>
-<h3>Member Since: <h4><%=  %></h4></h3>
-
+<h3>Home Station: <h4><%= stationId  %></h4></h3>
+<h3>Member Since: <h4><%= createdAt %></h4></h3>
+<img src=" <%= avi %> " alt="profile photo">
 <h3>Most recent posts:  </h3>
 <% for (let i = 0; i < userPosts.length; i++) { %>
    <% thisPost = userPosts[i]; %>
@@ -15,7 +15,7 @@
     <h3><%= thisPost.get().station.get().name %></h3>
     <h3><%= thisPost.get().title %> </h3>
     <h5><%= thisPost.get().createdAt %></h5>
-<p><%= thisPost.get().comment %></p>
+
 </div>
 
 <% } %>

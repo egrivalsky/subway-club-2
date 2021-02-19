@@ -4,7 +4,7 @@
 
 
 
-<form action="profile" method="__method">
+<form method="POST" action="/profile/<%= thisUser.id %>/?_method=PUT">
 <h4>Username</h4>
 <p>Current username: <%= thisUser.userName  %> </p>
 <h5>Change to <input type="text" autofocus placeholder="<%= thisUser.userName  %>" name="userName" /></h5>
@@ -32,6 +32,6 @@
 <h5>Change to:</h5>
 
 <label for="inputFile">Choose new photo</label>
-<input type="file" name="avi">
+<input type="file" name="inputFile">
 <button type="submit" class="btn btn-primary">Upload and share</button>
 </form>
