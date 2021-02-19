@@ -139,19 +139,14 @@ app.get('/show/:id', async(req, res) => {
         where: { stationId: thisStation.id },
         order: [['createdAt', 'desc']]
         });
-
-        console.log("thesePosts[2].get() below:")  
-        console.log(thesePosts[2].get())
-
         res.render('show', { thisStation, thesePosts });
-        console.log("thisStation.get() below: " );
-        console.log(thisStation.get())
+
   } else { 
     res.redirect('/stations'); // --??-- how do I make a flash error instead?
     }
   } catch(e) {
     console.log("WE HIT THE CATCH. ERROR BELOW:")
-    console.log(message);
+    console.log(e.message);
   }
   });
 
@@ -213,6 +208,18 @@ app.post('/post', uploads.single('inputFile'), (req, res) => { //after posting r
         res.redirect(`/newPost/${newPost.id}`) 
       });
       });
+});
+
+app.delete('/post/:id', async(req, res) => {
+  console.log("hello");
+  try {
+    await db.post.destroy({
+      where: { id: req.params.id }
+    })
+    res.redirect('/profile')
+  } catch(e) {
+    console.log(e.message);
+  }
 });
 
 app.get('/newPost/:id', async(req, res) => {

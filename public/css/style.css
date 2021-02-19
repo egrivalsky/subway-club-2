@@ -2,6 +2,12 @@
   font-family: Helvetica, Arial, sans-serif;
 }
 
+HTML {
+  background-image: url("../assets/background.jpg");
+  background-color: black;
+  background-size: cover;
+}
+
 body {
   width: 50%;
   margin: 0 auto;
@@ -13,6 +19,7 @@ body {
   margin-top: 50px;
   opacity: 1;
   min-height: 600px;
+  opacity: 0.9;
 }
 
 button {
@@ -41,6 +48,10 @@ nav ul li {
 
 }
 
+.delete {
+  border-radius: 10px;
+  background-color: red;
+}
 .post-form {
   display: flex;
   flex-direction: column;
@@ -53,4 +64,10 @@ nav ul li {
   box-shadow: -15px -10px 20px 10px rgb(137, 137, 175) inset;
   margin: 5px;
   max-width: 80%;
+  padding: 8px;
+}
+
+#profile-photo {
+  max-width: 90%;
+  margin: 0 auto;
 }
