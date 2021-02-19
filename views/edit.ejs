@@ -1,0 +1,37 @@
+<h2>Edit your profile</h2>
+
+
+
+
+
+<form action="profile" method="__method">
+<h4>Username</h4>
+<p>Current username: <%= thisUser.userName  %> </p>
+<h5>Change to <input type="text" autofocus placeholder="<%= thisUser.userName  %>" name="userName" /></h5>
+
+<h4>Favorite Station</h4>
+<p>Current Station: <%= thisUser.stationId  %> </p>
+<h5>Change to:</h5>
+<select name="stationId>">
+<% for (let i = 0; i < stationInfo.length; i++) { %> 
+    <% const stationOption = stationInfo[i].get() %> 
+
+ <option value="<%= stationOption.id %>"><%= stationOption.name  %></option> 
+ <% } %> 
+</select>
+
+
+<h4>About Me</h4>
+<p>Current: <%= thisUser.aboutMe  %></p> 
+<h5>change to:
+    <textarea rows="8" cols="60" name="aboutMe" palceholder=" <%= thisUser.aboutMe  %>  "></textarea>
+</h5>
+<h4>Photo</h4>
+<p>Current:</p>
+<img src=" <%= thisUser.avi %>  ">
+<h5>Change to:</h5>
+
+<label for="inputFile">Choose new photo</label>
+<input type="file" name="avi">
+<button type="submit" class="btn btn-primary">Upload and share</button>
+</form>

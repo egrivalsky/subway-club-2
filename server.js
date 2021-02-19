@@ -56,8 +56,9 @@ app.get('/', async(req, res) => {
     
 });
 
+//PROFILE
 app.get('/profile', isLoggedIn, async(req, res) => {
-    const { id, name, email } = req.user.get();
+    const { id, name, email, username, stationId, blurb, avi } = req.user.get();
     try {
       const userPosts = await db.post.findAll({
       where: { userId: id },
@@ -73,6 +74,24 @@ app.get('/profile', isLoggedIn, async(req, res) => {
       console.log(e.message)
     }
 });
+
+//EDIT PROFILE
+
+app.get('/edit/:id', async(req, res) => {
+  try {
+    const thisUser = await db.user.findByPk(req.params.id);
+    const stationInfo = await db.station.findAll({
+      order: [['name', 'asc']]
+    })
+    //console.log(thisUser.get());
+    console.log("*********************************-STATION-INFO-TOP-******************")
+    console.log(stationInfo[0].get());
+    console.log("*********************************-STATION-INFO-BOTTOM-******************")
+    res.render('edit', { thisUser, stationInfo });
+  } catch {
+    console.log(e.message);
+  }
+})
 
  app.get('/test', async(req, res) => {
   const testData = await db.test.findAll();
@@ -131,7 +150,7 @@ app.get('/stations/:id', (req, res) => {
 
 //COMMENTS
     //go to the comments page
-  app.get('/post/:id', async(req, res) => {
+  app.get('/post/:id', isLoggedIn, async(req, res) => {
     try {
     const thisStation = await db.station.findByPk(req.params.id)
       res.render('post.ejs', { thisStation });
