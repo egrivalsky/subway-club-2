@@ -37,6 +37,9 @@ module.exports = (sequelize, DataTypes) => {
     aboutMe: {
       type: DataTypes.STRING,
     },
+    avi: {
+      type: DataTypes.STRING,
+    },
     stationId: {
       type: DataTypes.INTEGER
     },

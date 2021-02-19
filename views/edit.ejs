@@ -4,7 +4,7 @@
 
 
 
-<form method="POST" action="/profile/<%= thisUser.id %>/?_method=PUT">
+<form method="POST" action="/profile/<%= thisUser.id %>/?_method=PUT" enctype="multipart/form-data">
 <h4>Username</h4>
 <p>Current username: <%= thisUser.userName  %> </p>
 <h5>Change to <input type="text" autofocus placeholder="<%= thisUser.userName  %>" name="userName" /></h5>
@@ -12,7 +12,7 @@
 <h4>Favorite Station</h4>
 <p>Current Station: <%= thisUser.stationId  %> </p>
 <h5>Change to:</h5>
-<select name="stationId>">
+<select name="stationId">
 <% for (let i = 0; i < stationInfo.length; i++) { %> 
     <% const stationOption = stationInfo[i].get() %> 
 
@@ -33,5 +33,5 @@
 
 <label for="inputFile">Choose new photo</label>
 <input type="file" name="inputFile">
-<button type="submit" class="btn btn-primary">Upload and share</button>
+<button type="submit" class="btn btn-primary">Update Profile</button>
 </form>

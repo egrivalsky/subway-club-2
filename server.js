@@ -59,17 +59,15 @@ app.get('/', async(req, res) => {
 
 //PROFILE
 app.get('/profile', isLoggedIn, async(req, res) => {
-    const { id, name, email, userName, avi, aboutMe, stationId, createdAt} = req.user.get();
+    const user = req.user.get();
     try {
       const userPosts = await db.post.findAll({
-      where: { userId: id },
+      where: { userId: user.id },
       include: [db.station],
       order: [['createdAt', 'desc']]
       })
-      console.log("HERE IS  USERPOSTS: ")
-      console.log(userPosts)
-      console.log("here is our id, name, email, stationIdand userPosts");
-      res.render('profile', { createdAt, id, name, email, userPosts, userName, avi, stationId, aboutMe });
+      console.log(user);
+      res.render('profile', { user, userPosts });
     } catch(e) {
       console.log("we are hitting the catch. Here is our error: >>>>>>>>>>>")
       console.log(e.message)
@@ -85,29 +83,40 @@ app.get('/edit/:id', async(req, res) => {
     const stationInfo = await db.station.findAll({
       order: [['name', 'asc']]
     })
-    //console.log(thisUser.get());
-    console.log("*********************************-STATION-INFO-TOP-******************")
-    console.log(stationInfo[0].get());
-    console.log("*********************************-STATION-INFO-BOTTOM-******************")
     res.render('edit', { thisUser, stationInfo });
   } catch {
     console.log(e.message);
   }
 })
 
-app.put('/profile/:id', async(req, res) => {
+app.put('/profile/:id', uploads.single('inputFile'), async(req, res) => {
+  console.log("req.params.id: ");
+  console.log(req.params.id);
+  const image = req.file.path;
+  const data = req.body;
+  console.log("data: ");
+  console.log(data);
+  const thisUser = req.user.get();
+  console.log("< < < < thisUser > > > > ");
+  console.log(thisUser);
+  console.log("< < < < thisUser > > > > ");
+  //uploads image and returns url
   try {
-    console.log(req.params.id);
-  const profile = await db.user.update({
-    userName: req.body.userName, 
-    avi: req.body.avi, 
-    aboutMe: req.body.aboutMe, 
-    stationId: req.body.stationId
+    await cloudinary.uploader.upload(image, (result) => {
+      console.log(result);
+      photo = result.url;
+      });
+    //updates user table, including new photo url
+    const profile = await db.user.update({
+    userName: data.userName, 
+    avi: photo, 
+    aboutMe: data.aboutMe, 
+    stationId: data.stationId
   }, {
     where: { id: req.params.id },
-    returning: true,
-    plain: true,
-  }) 
+    returning: true, //don't know what this does
+    plain: true,  //or this -- stack overflow
+  }) //shows new profile
     res.redirect('/profile')
   } catch(e) {
     console.log(e.message);
@@ -127,9 +136,9 @@ app.get('/show/:id', async(req, res) => {
   const existAlready = await db.post.count({ where: {stationId: thisStation.id} });
   if (existAlready > 0) {
       const thesePosts = await db.post.findAll({
-          where: { stationId: thisStation.id },
-          order: [['createdAt', 'desc']]
-          });
+        where: { stationId: thisStation.id },
+        order: [['createdAt', 'desc']]
+        });
 
         console.log("thesePosts[2].get() below:")  
         console.log(thesePosts[2].get())
@@ -179,15 +188,39 @@ app.get('/stations/:id', (req, res) => {
       console.log(e)
     }
     });
+//Woke up this morning 2/19 to find this next app.post route. copy/pasted it from
+//old github browser tab
+ //leave a comment
+app.post('/post', uploads.single('inputFile'), (req, res) => { //after posting redirect (and post?) goes to wrong station!
+  const image = req.file.path;
+  const data = req.body;
+  const thisUser = req.user.get();
+  console.log(data);
+  console.log(thisUser);
 
- 
+  cloudinary.uploader.upload(image, (result) => {
+    console.log(result); // object
+    photo = result.url; // string
+    const newPost = db.post.create({
+        userId: thisUser.id,
+        stationId: data.station,
+        user_photo: photo,
+        title: data.title,
+        rating: data.rating,
+        comment: data.comment,
+      })
+      .then(newPost => { //this is the first time I realized I needed this on my own
+        res.redirect(`/newPost/${newPost.id}`) 
+      });
+      });
+});
 
 app.get('/newPost/:id', async(req, res) => {
   try{
     const newPost = await db.post.findByPk(req.params.id);
     const thisStation = await db.station.findByPk(newPost.stationId); // --??-- I can access newPost.station here
     console.log("newPost StationId: " + thisStation.get().id);
-    console.log(newPost); // --??-- but I can't log the whole object here
+    console.log(newPost); 
     console.log(thisStation.get().name);
     res.render('newPost', {post: newPost.get(), station: thisStation.get() }); //***
   } catch(e) {
