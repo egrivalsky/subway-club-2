@@ -67,7 +67,7 @@ nav ul li {
   padding: 8px;
 }
 
-#profile-photo {
+.profile-photo {
   max-width: 90%;
   margin: 0 auto;
 }

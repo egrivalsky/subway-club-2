@@ -63,40 +63,6 @@ app.get('/', async(req, res) => {
   console.log('test successful');
  });
 
-//STATIONS
-app.get('/show/:id', async(req, res) => {
-  try {
-  const thisStation = await db.station.findByPk(req.params.id);
-  const existAlready = await db.post.count({ where: {stationId: thisStation.id} });
-  if (existAlready > 0) {
-      const thesePosts = await db.post.findAll({
-        where: { stationId: thisStation.id },
-        order: [['createdAt', 'desc']]
-        });
-        res.render('show', { thisStation, thesePosts });
-
-  } else { 
-    res.redirect('/stations'); // --??-- how do I make a flash error instead?
-    }
-  } catch(e) {
-    console.log("WE HIT THE CATCH. ERROR BELOW:")
-    console.log(e.message);
-  }
-  });
-
-app.get('/newPost/:id', async(req, res) => {
-  try{
-    const newPost = await db.post.findByPk(req.params.id);
-    const thisStation = await db.station.findByPk(newPost.stationId); // --??-- I can access newPost.station here
-    console.log("newPost StationId: " + thisStation.get().id);
-    console.log(newPost); 
-    console.log(thisStation.get().name);
-    res.render('newPost', {post: newPost.get(), station: thisStation.get() }); //***
-  } catch(e) {
-    console.log(e.message);
-  }
-});
-
 // app.get('/somethingbroke', (req, res) => {
 //   res.render('404');
 // })
@@ -111,11 +77,12 @@ app.use('/profile', require('./routes/profile'));
 app.use('/edit', require('./routes/editProfile'));
 app.use('/stations', require('./routes/stations'));
 app.use('/post', require('./routes/post'));
+app.use('./show', require('./routes/show'));
+app.use('/newPost', require('./routes/newPost'));
 
 
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
-console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);
-
-module.exports = server;
+console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`)
+});

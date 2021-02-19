@@ -9,10 +9,6 @@ const router = express.Router();
 const isLoggedIn = require('../middleware/isLoggedIn');
 const db = require('../models');
     
-    
-    
-    
-    
     //go to the comments page
     router.get('/:id', isLoggedIn, async(req, res) => {
         try {
@@ -25,7 +21,7 @@ const db = require('../models');
     //Woke up this morning 2/19 to find this next app.post route. copy/pasted it from
     //old github browser tab
      //leave a comment
-    router.post('/', uploads.single('inputFile'), (req, res) => { //after posting redirect (and post?) goes to wrong station!
+    router.post('/', uploads.single('inputFile'), (req, res) => {
       const image = req.file.path;
       const data = req.body;
       const thisUser = req.user.get();

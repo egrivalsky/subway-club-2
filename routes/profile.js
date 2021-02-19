@@ -19,8 +19,8 @@ router.get('/', isLoggedIn, async(req, res) => {
       include: [db.station],
       order: [['createdAt', 'desc']]
       })
-      console.log(user);
-      res.render('profile', { user, userPosts });
+      const favStation = await db.station.findByPk(user.stationId);
+      res.render('profile', { user, userPosts, favStation });
     } catch(e) {
       console.log("we are hitting the catch. Here is our error: >>>>>>>>>>>")
       console.log(e.message)
