@@ -4,21 +4,3 @@
 
 <p><a href="/edit/<%= user.id %>">Edit profile</a></p>
 
-<h3>Home Station: <%= favStation.name  %></h3>
-<h3>Member Since: <%= user.createdAt %></h3>
-<img src=" <%= user.avi %> " alt="profile photo" class="profile-photo">
-<h3>Most recent posts:  </h3>
-<% for (let i = 0; i < userPosts.length; i++) { %>
-   <% thisPost = userPosts[i]; %>
-<div class="profile-post">
-    <h3><%= thisPost.get().station.get().name %></h3>
-    <h3><%= thisPost.get().title %> </h3>
-    <h5><%= thisPost.get().createdAt %></h5>
-
-    <form method="POST" action="/post/<%= thisPost.get().id %>/?_method=DELETE">
-        <input type="submit" value="Delete This Post">
-    </form>
-
-</div>
-
-<% } %>

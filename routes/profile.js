@@ -12,7 +12,9 @@ const db = require('../models');
 
 
 router.get('/', isLoggedIn, async(req, res) => {
+    console.log('we hit the profile get route');
     const user = req.user.get();
+    console.log(user);
     try {
       const userPosts = await db.post.findAll({
       where: { userId: user.id },
@@ -20,7 +22,11 @@ router.get('/', isLoggedIn, async(req, res) => {
       order: [['createdAt', 'desc']]
       })
       const favStation = await db.station.findByPk(user.stationId);
+      if (favStation) {
       res.render('profile', { user, userPosts, favStation });
+      } else {
+        res.render('profile', {user});
+      }
     } catch(e) {
       console.log("we are hitting the catch. Here is our error: >>>>>>>>>>>")
       console.log(e.message)

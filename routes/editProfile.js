@@ -11,6 +11,7 @@ const db = require('../models');
 
 
 router.get('/:id', async(req, res) => {
+  console.log("at edit page")
     try {
       const thisUser = await db.user.findByPk(req.params.id);
       const stationInfo = await db.station.findAll({
@@ -19,6 +20,7 @@ router.get('/:id', async(req, res) => {
       res.render('edit', { thisUser, stationInfo });
     } catch {
       console.log(e.message);
+      
     }
   })
   
