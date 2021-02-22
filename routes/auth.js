@@ -23,7 +23,7 @@ router.post('/signup', (req, res) => {
       password: req.body.password,
       userName: "None: Edit profile to update",
       aboutMe: "Edit profile to update",
-      stationId: 0,
+      stationId: 3,
       avi: "https://res.cloudinary.com/dbljwcjis/image/upload/v1613958352/no-photo_bc2jxg.jpg"
     }
   })

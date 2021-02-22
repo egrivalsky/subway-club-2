@@ -71,3 +71,11 @@ nav ul li {
   max-width: 90%;
   margin: 0 auto;
 }
+
+#sign-up {
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  margin: 15px 15p
+}
