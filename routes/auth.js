@@ -34,7 +34,7 @@ router.post('/signup', (req, res) => {
       // Flash Message
       const successObject = {
         successRedirect: '/',
-        successFlash: 'Account created and logging in...'
+        successFlash: 'Account created. Welcome!'
       }
       passport.authenticate('local', successObject)(req, res);
     } else {
@@ -59,7 +59,7 @@ router.post('/login', passport.authenticate('local', {
 
 router.get('/logout', (req, res) => {
   req.logOut();
-  req.flash('success', 'Logging out... See you soon.');
+  req.flash('success', 'Logging out. Happy rails to you.');
   res.redirect('/');
 });
 

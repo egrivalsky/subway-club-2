@@ -11,14 +11,14 @@ Edit and post comments.
     <input type="hidden" value="<%= thisStation.name %>" name="name">
     <div class="post-form">
         <label for="title">Give your post a title</label>
-        <input type="text" name="title" style="width: 200px" autofocus placeholder="Give it a catchy title" cols="40"/>
+        <input required type="text" name="title" style="width: 200px" autofocus placeholder="Give it a catchy title" cols="40"/>
     </div>
         <label for="inputFile">Share an image</label>
-        <input type="file" name="inputFile">
+        <input required type="file" name="inputFile">
     </div>
     <div class="post-form">
         <label for="comment">Tell me about it</label>
-        <textarea name="comment" placeholder="Tell the world a story about this station" rows="8" cols="100"></textarea>
+        <textarea required name="comment" placeholder="Tell the world a story about this station" rows="8" cols="100"></textarea>
     </div>
     <div>
         <label for="rating">Rate <%= this.station %> 1 - 10</label>
