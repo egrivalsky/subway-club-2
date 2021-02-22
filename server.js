@@ -63,14 +63,15 @@ app.get('/', async(req, res) => {
   console.log('test successful');
  });
 
-// app.get('/somethingbroke', (req, res) => {
-//   res.render('404');
-// })
-// .catch(e => {
-//  console.log('SNAG. Your app is broke. Fix it. :)');
-//  console.log('Error below ...v');
-//  console.log(e);
-// });
+app.get('/somethingbroke', async(req, res) => {
+try {
+  res.render('404');
+} catch(e) {
+ console.log('SNAG. Your app is broke. Fix it. :)');
+ console.log('Error below ...v');
+ console.log(e);
+}
+});
 
 app.use('/auth', require('./routes/auth'));
 app.use('/profile', require('./routes/profile'));

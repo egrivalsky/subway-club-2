@@ -14,6 +14,7 @@ router.get('/:id', async(req, res) => {
     console.log("made it to routes/show");
     try {
     const thisStation = await db.station.findByPk(req.params.id);
+    //checks if station has any posts. If so it sends them up.
     const existAlready = await db.post.count({ where: {stationId: thisStation.id} });
     if (existAlready > 0) {
         const thesePosts = await db.post.findAll({
@@ -23,11 +24,12 @@ router.get('/:id', async(req, res) => {
           res.render('show', { thisStation, thesePosts });
   
     } else { 
-      res.redirect('/'); // --??-- how do I make a flash error instead?
+      res.render('noPosts');
       }
     } catch(e) {
       console.log("WE HIT THE CATCH. ERROR BELOW:")
       console.log(e.message);
+      res.redirect("/somethingbroke")
     }
     });
 

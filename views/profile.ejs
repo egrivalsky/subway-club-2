@@ -1,6 +1,14 @@
-<h2>Welcome, <%= user.name %></h2>
+
 
 <p><a href="/">Back home.</a></p>
 
 <p><a href="/edit/<%= user.id %>">Edit profile</a></p>
+
+<h2>Welcome, <%= user.name %></h2>
+<img src="<%= user.avi %>" alt="profile picture" width="250px" >
+
+<p>Username: <%= user.userName %></p>
+<p>Home Station : <%= user.stationId %></p>
+<p>About Me: <%= user.aboutMe %></p>
+
 

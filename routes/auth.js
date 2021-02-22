@@ -20,7 +20,11 @@ router.post('/signup', (req, res) => {
     where: { email: req.body.email },
     defaults: {
       name: req.body.name,
-      password: req.body.password
+      password: req.body.password,
+      userName: "None: Edit profile to update",
+      aboutMe: "Edit profile to update",
+      stationId: 0,
+      avi: "https://res.cloudinary.com/dbljwcjis/image/upload/v1613958352/no-photo_bc2jxg.jpg"
     }
   })
   .then(([user, created]) => {
