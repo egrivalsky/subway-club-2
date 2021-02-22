@@ -13,7 +13,11 @@ const db = require('../models');
     router.get('/:id', isLoggedIn, async(req, res) => {
         try {
         const thisStation = await db.station.findByPk(req.params.id)
-          res.render('post', { thisStation });
+          if (thisStation) {
+            res.render('post', { thisStation });
+          } else {
+            res.redirect('/');
+          }
         } catch(e) {
           console.log("WE HIT THE CATCH. ERROR BELOW:")
           console.log(e.message);

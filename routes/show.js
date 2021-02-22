@@ -10,7 +10,7 @@ const router = express.Router();
 const isLoggedIn = require('../middleware/isLoggedIn');
 const db = require('../models');
 
-router.get('/:id', async(req, res) => {
+router.get('/:id', isLoggedIn, async(req, res) => {
     console.log("made it to routes/show");
     try {
     const thisStation = await db.station.findByPk(req.params.id);
@@ -24,7 +24,8 @@ router.get('/:id', async(req, res) => {
           res.render('show', { thisStation, thesePosts });
   
     } else { 
-      res.render('noPosts');
+      console.log(thisStation.get());
+      res.render('post', { thisStation } );
       }
     } catch(e) {
       console.log("WE HIT THE CATCH. ERROR BELOW:")
