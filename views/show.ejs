@@ -9,12 +9,15 @@
   <% const post = thesePosts[i].get() %> 
 
   <div class="profile-post">
-    <h3><%= thisStation.name %></h3>
-    <h3><%= post.title %> </h3>
-    <p></p>
-    <h5><%= post.createdAt %></h5>
-    <p><%= post.comment %></p>
-
-
+    <div id="post-text>">
+      <h3><%= thisStation.name %></h3>
+      <h3><%= post.title %> </h3>
+      <p></p>
+      <h5><%= post.createdAt %></h5>
+      <p><%= post.comment %></p>
+  </div>
+  <div class="post-photo">
+    <img src="<%= thisStation.user_photo %>" width="150px">  
+  </div>
 </div>
 <% } %> 

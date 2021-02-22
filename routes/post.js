@@ -51,7 +51,6 @@ const db = require('../models');
     });
     
     router.delete('/:id', async(req, res) => {
-      console.log("hello");
       try {
         await db.post.destroy({
           where: { id: req.params.id }
