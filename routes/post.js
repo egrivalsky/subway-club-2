@@ -4,10 +4,14 @@ const cloudinary = require('cloudinary');
 const multer = require('multer');
 const uploads = multer({ dest: './uploads'});
 const router = express.Router();
+const methodOverride = require('method-override');
 
 // isLoggedIn middleware
 const isLoggedIn = require('../middleware/isLoggedIn');
 const db = require('../models');
+
+//methodOverride middleware
+router.use(methodOverride('_method'));
     
     //go to the comments page
     router.get('/:id', isLoggedIn, async(req, res) => {
@@ -50,14 +54,17 @@ const db = require('../models');
           });
     });
     
-    router.delete('/:id', async(req, res) => {
+    router.delete('post/:id', async(req, res) => {
       try {
+        console.log("We're in the delete route");
         await db.post.destroy({
           where: { id: req.params.id }
         })
         res.redirect('/profile')
       } catch(e) {
+        console.log("where in the catch. Here's the error:");
         console.log(e.message);
+        res.redirect('/somethingbroke')
       }
     });
 

@@ -11,4 +11,20 @@
 <p>Home Station : <%= favStation.name %></p>
 <p>About Me: <%= user.aboutMe %></p>
 
+<% for (let i = 0; i < userPosts.length; i++) { %> 
+    <% const thisPost = userPosts[i] %> 
+        <div class="profile-post">
+            <h3><%= thisPost.station.name %></h3>
+            <h3><%= thisPost.title %> </h3>
+            <h5><%= thisPost.createdAt %></h5>
+            <p><%= thisPost.comment %></p>
+            <img src="<%= thisPost.user_photo %>" width="150px" />
+            <form method="POST" action="/post/<%= thisPost.get().id %>/?_method=DELETE">
+                <input type="submit" value="Delete Post">
+            </form>
+
+        </div>
+
+    <% } %> 
+
 
