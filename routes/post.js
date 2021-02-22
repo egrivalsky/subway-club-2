@@ -54,7 +54,7 @@ router.use(methodOverride('_method'));
           });
     });
     
-    router.delete('post/:id', async(req, res) => {
+    router.delete('/:id', async(req, res) => {
       try {
         console.log("We're in the delete route");
         await db.post.destroy({
