@@ -1,18 +1,19 @@
 <h2>Edit your profile</h2>
 
-
+<p><a href="/profile">Back to profile</a></p>
+<p><a href="/">Back home</a></p>
 
 
 
 <form method="POST" action="/profile/<%= thisUser.id %>/?_method=PUT" enctype="multipart/form-data">
 <h4>Username</h4>
 <p>Current username: <%= thisUser.userName  %> </p>
-<h5>Change to <input type="text" autofocus placeholder="<%= thisUser.userName  %>" name="userName" /></h5>
+<h5>Change to <input required type="text" autofocus placeholder="<%= thisUser.userName  %>" name="userName" /></h5>
 
 <h4>Favorite Station</h4>
 <p>Current Station: <%= thisUser.stationId  %> </p>
 <h5>Change to:</h5>
-<select name="stationId">
+<select requried name="stationId">
 <% for (let i = 0; i < stationInfo.length; i++) { %> 
     <% const stationOption = stationInfo[i].get() %> 
 
@@ -24,7 +25,7 @@
 <h4>About Me</h4>
 <p>Current: <%= thisUser.aboutMe  %></p> 
 <h5>change to:
-    <textarea rows="8" cols="60" name="aboutMe" palceholder=" <%= thisUser.aboutMe  %>  "></textarea>
+    <textarea requried rows="8" cols="60" name="aboutMe" palceholder=" <%= thisUser.aboutMe  %>  "></textarea>
 </h5>
 <h4>Photo</h4>
 <p>Current:</p>
@@ -32,6 +33,6 @@
 <h5>Change to:</h5>
 
 <label for="inputFile">Choose new photo</label>
-<input type="file" name="inputFile">
+<input type="file" name="inputFile" required>
 <button type="submit" class="btn btn-primary">Update Profile</button>
 </form>

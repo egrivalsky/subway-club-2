@@ -12,6 +12,24 @@ module.exports = {
      * }], {});
     */
    return queryInterface.bulkInsert('stations', [{
+    complex_id: 0,
+    gtfs_stop_id: 'R00',
+    division: 'ZZZ',
+    line: 'none',
+    name: 'none',
+    borough: 'none',
+    structure: 'none',
+    latitude: 0.0,
+    longitude: 0.0,
+    north_label: 'n/a',
+    south_label: 'n/a',
+    ada: 0,
+    ada_notes: null,
+    main_photo: 'url',
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+     {
     complex_id: 1,
     gtfs_stop_id: 'R01',
     division: 'BMT',

@@ -22,11 +22,12 @@ router.get('/', isLoggedIn, async(req, res) => {
       order: [['createdAt', 'desc']]
       })
       const favStation = await db.station.findByPk(user.stationId);
-      if (favStation) {
+      // if (favStation) {
       res.render('profile', { user, userPosts, favStation });
-      } else {
-        res.render('profile', {user});
-      }
+      console.log(favStation.name);
+      // } else {
+      //   res.render('profile', {user});
+      // }
     } catch(e) {
       console.log("we are hitting the catch. Here is our error: >>>>>>>>>>>")
       console.log(e.message)
