@@ -59,8 +59,10 @@ router.put('/:id', uploads.single('inputFile'), async(req, res) => {
     }) //shows new profile
       res.redirect('/profile')
     } catch(e) {
+      console.log("WE HIT THE CATCH. ERROR BELOW:")
       console.log(e.message);
-    } 
+      res.redirect("/somethingbroke")
+    }
 });
 
 module.exports = router;

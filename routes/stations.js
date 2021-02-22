@@ -4,9 +4,15 @@ const db = require('../models');
 
 
 router.get('/:id', (req, res) => {
+  try{
     const thisStation = req.params.id;
     res.redirect(`../show/${thisStation}`);
-  });
+  } catch(e) {
+    console.log("WE HIT THE CATCH. ERROR BELOW:")
+    console.log(e.message);
+    res.redirect("/somethingbroke")
+  }
+});
 
 
 router.get('/', async(req, res) => {

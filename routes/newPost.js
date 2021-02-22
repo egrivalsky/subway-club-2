@@ -18,7 +18,9 @@ router.get('/:id', async(req, res) => {
       console.log(thisStation.get().name);
       res.render('newPost', {post: newPost.get(), station: thisStation.get() }); //***
     } catch(e) {
+      console.log("WE HIT THE CATCH. ERROR BELOW:")
       console.log(e.message);
+      res.redirect("/somethingbroke")
     }
   });
 

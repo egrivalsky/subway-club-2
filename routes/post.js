@@ -15,11 +15,12 @@ const db = require('../models');
         const thisStation = await db.station.findByPk(req.params.id)
           res.render('post', { thisStation });
         } catch(e) {
-          console.log(e)
+          console.log("WE HIT THE CATCH. ERROR BELOW:")
+          console.log(e.message);
+          res.redirect("/somethingbroke")
         }
         });
-    //Woke up this morning 2/19 to find this next app.post route. copy/pasted it from
-    //old github browser tab
+
      //leave a comment
     router.post('/', uploads.single('inputFile'), (req, res) => {
       const image = req.file.path;

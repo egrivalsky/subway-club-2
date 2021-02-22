@@ -18,9 +18,10 @@ router.get('/:id', async(req, res) => {
         order: [['name', 'asc']]
       })
       res.render('edit', { thisUser, stationInfo });
-    } catch {
+    } catch(e) {
+      console.log("WE HIT THE CATCH. ERROR BELOW:")
       console.log(e.message);
-      
+      res.redirect("/somethingbroke")
     }
   })
   
