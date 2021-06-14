@@ -13,7 +13,7 @@ config = require(__dirname + '/../config/config.json')[env];
 // config = require(__dirname + '/config/config.json')[env];
 } else {
 //production:
-const config = require(__dirname + '/../config/production.json')[env];
+config = require(__dirname + '/../config/production.json')[env];
 // const config = require(__dirname + '/config/config.json')[env];
 }
 const db = {};
