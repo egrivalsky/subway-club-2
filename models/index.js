@@ -9,12 +9,12 @@ const env = process.env.NODE_ENV || 'development';
 let config;
 if (env === 'development') {
 //development:
-// config = require(__dirname + '/../config/config.json')[env];
-config = require(__dirname + '/config/config.json')[env];
+config = require(__dirname + '/../config/config.json')[env];
+// config = require(__dirname + '/config/config.json')[env];
 } else {
 //production:
-// const config = require(__dirname + '/../config/production.json')[env];
-const config = require(__dirname + '/config/config.json')[env];
+const config = require(__dirname + '/../config/production.json')[env];
+// const config = require(__dirname + '/config/config.json')[env];
 }
 const db = {};
 
