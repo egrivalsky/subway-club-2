@@ -1,13 +1,13 @@
 {
   "development": {
 
-    "database": "subway_club_dev",
+    "database": "the_platform",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
 
-    "database": "subway_club_test",
+    "database": "the_platform",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
