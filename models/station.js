@@ -10,13 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
       models.station.belongsToMany(models.line, {
         through: "stationsLines"
       });
       models.station.hasMany(models.post);
       models.station.hasMany(models.user);
-      
     }
   };
   station.init({

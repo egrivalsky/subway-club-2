@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
       models.user.hasMany(models.post);
       models.user.belongsTo(models.station);
     }
@@ -21,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         len: {
-          args: [1,24],
-          msg: 'Name must be between 1 and 24 characters'
+          args: [1,99],
+          msg: 'Name must be between 1 and 99 characters'
         }
       }
     },
@@ -34,24 +33,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    aboutMe: {
-      type: DataTypes.STRING,
-    },
-    avi: {
-      type: DataTypes.STRING,
-    },
-    stationId: {
-      type: DataTypes.INTEGER
-    },
-    userName: {
-      type: DataTypes.STRING,
-      validate: {
-        len: {
-          args: [4,32],
-          msg: 'Username must be between 4 and 24 characters'
-        }
-      }
-    },
     password: {
       type: DataTypes.STRING,
       validate: {
@@ -60,12 +41,24 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Password must be between 8 and 99 characters'
         }
       }
+    },
+    aboutMe: {
+      type: DataTypes.STRING
+    },
+    avi: {
+      type: DataTypes.STRING
+    },
+    stationId: {
+      type: DataTypes.STRING
+    },
+    userName: {
+      type: DataTypes.STRING
     }
   }, {
     sequelize,
     modelName: 'user',
   });
-
+  
   user.addHook('beforeCreate', function(pendingUser) {
     // Bcrypt hash a password for us
     let hash = bcrypt.hashSync(pendingUser.password, 12);

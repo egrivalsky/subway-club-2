@@ -11,8 +11,8 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   return queryInterface.bulkInsert('stations', [{
-    line: 'A',
+   await queryInterface.bulkInsert('stations', [{
+    name: 'A',
     createdAt: new Date(),
     updatedAt: new Date()
   },

@@ -6,6 +6,7 @@ const session = require('express-session');
 const passport = require('./config/ppConfig');
 const flash = require('connect-flash');
 const SECRET_SESSION = process.env.SECRET_SESSION;
+const bodyParser = require('body-parser');
 const multer = require('multer');
 const cloudinary = require('cloudinary');
 const uploads = multer({ dest: './uploads'});
@@ -22,6 +23,8 @@ app.use(require('morgan')('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 app.use(layouts);
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // secret: What we actually will be giving the user on our site as a session cookie
 // resave: Save the session even if it's modified, make this false
@@ -83,7 +86,7 @@ app.use('/newPost', require('./routes/newPost'));
 app.use('/playground', require('./routes/playground'));
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const server = app.listen(PORT, () => {
 console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`)
 });

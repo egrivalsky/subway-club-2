@@ -28,6 +28,7 @@ router.post('/signup', (req, res) => {
     }
   })
   .then(([user, created]) => {
+    console.log('hit dot-then on auth.js line 30')
     if (created) {
       // if created, success and redirect back to home
       console.log(`${user.name} was created`);
@@ -55,7 +56,8 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/auth/login',
   successFlash: 'Welcome back...',
   failureFlash: 'Either email or password is incorrect. Please try again.'
-}));
+}))
+  console.log("user successfully logged in");
 
 router.get('/logout', (req, res) => {
   req.logOut();
