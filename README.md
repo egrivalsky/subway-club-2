@@ -29,6 +29,6 @@ No need to install anything. The Platform is up and running on Heroku at https:/
 #### Edited Profile
 ![edited_profile](3.png)
 #### Station Index
-![station_index](4.png
+![station_index](4.png)
 #### Station Show Page
 ![station_show](5.png)
